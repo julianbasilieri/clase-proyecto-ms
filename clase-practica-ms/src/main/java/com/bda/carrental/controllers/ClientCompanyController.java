@@ -27,8 +27,8 @@ public class ClientCompanyController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<ClientCompanyDto> getById(@PathVariable("id") Long id) {
-        ClientCompanyDto values = clientCompanyService.getById(id);
-        return ResponseEntity.ok(values);
+        ClientCompanyDto value = clientCompanyService.getById(id);
+        return ResponseEntity.ok(value);
     }
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody ClientCompanyDto entity) {
@@ -42,7 +42,7 @@ public class ClientCompanyController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        ClientCompanyDto values = clientCompanyService.delete(id);
+        clientCompanyService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

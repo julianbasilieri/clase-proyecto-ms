@@ -1,24 +1,26 @@
 package com.bda.carrental.services;
 
 import com.bda.carrental.entities.Client;
-import com.bda.carrental.entities.ClientCompany;
 import com.bda.carrental.entities.dto.ClientDto;
-import com.bda.carrental.entities.dto.transformations.ClientCompanyDtoMapper;
 import com.bda.carrental.entities.dto.transformations.ClientDtoMapper;
+import com.bda.carrental.entities.dto.transformations.ClientMapper;
 import com.bda.carrental.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final ClientDtoMapper clientDtoMapper;
+    private final ClientMapper clientMapper;
 
-    public ClientServiceImpl(ClientRepository clientRepository, ClientDtoMapper clientDtoMapper) {
+    public ClientServiceImpl(ClientRepository clientRepository, ClientDtoMapper clientDtoMapper, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
         this.clientDtoMapper = clientDtoMapper;
+        this.clientMapper = clientMapper;
     }
 
 
@@ -61,8 +63,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void update(ClientDto entity) {
-        Optional<Client> optionalClient = clientRepository
-                .findById(entity.getId());
-        optionalClient.ifPresent(clientRepository::save);
+        Optional<Client> client = Stream.of(entity).map(clientMapper).findFirst();
+        client.ifPresent(clientRepository::save);
     }
 }

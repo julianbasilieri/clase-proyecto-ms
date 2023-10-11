@@ -3,22 +3,25 @@ package com.bda.carrental.services;
 import com.bda.carrental.entities.ClientCompany;
 import com.bda.carrental.entities.dto.ClientCompanyDto;
 import com.bda.carrental.entities.dto.transformations.ClientCompanyDtoMapper;
+import com.bda.carrental.entities.dto.transformations.ClientCompanyMapper;
 import org.springframework.stereotype.Service;
 import com.bda.carrental.repositories.ClientCompanyRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class ClientCompanyServiceImpl implements ClientCompanyService {
     private final ClientCompanyRepository clientCompanyRepository;
     private final ClientCompanyDtoMapper clientCompanyDtoMapper;
+    private final ClientCompanyMapper clientCompanyMapper;
 
     public ClientCompanyServiceImpl(ClientCompanyRepository clientCompanyRepository,
-                                    ClientCompanyDtoMapper clientCompanyDtoMapper) {
+                                    ClientCompanyDtoMapper clientCompanyDtoMapper, ClientCompanyMapper clientCompanyMapper) {
         this.clientCompanyRepository = clientCompanyRepository;
         this.clientCompanyDtoMapper = clientCompanyDtoMapper;
+        this.clientCompanyMapper = clientCompanyMapper;
     }
 
     @Override
@@ -59,8 +62,7 @@ public class ClientCompanyServiceImpl implements ClientCompanyService {
 
     @Override
     public void update(ClientCompanyDto entity) {
-        Optional<ClientCompany> optionalClientCompany = clientCompanyRepository
-                .findById(entity.getId());
-        optionalClientCompany.ifPresent(clientCompanyRepository::save);
+        Optional<ClientCompany> company = Stream.of(entity).map(clientCompanyMapper).findFirst();
+        company.ifPresent(clientCompanyRepository::save);
     }
 }
