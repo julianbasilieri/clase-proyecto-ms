@@ -35,8 +35,8 @@ public class ClientCompanyServiceImpl implements ClientCompanyService {
 
     @Override
     public ClientCompanyDto getById(Long id) {
-        Optional<ClientCompany> clientCompany = clientCompanyRepository.findById(id);
-        return clientCompany
+        Optional<ClientCompany> value = clientCompanyRepository.findById(id);
+        return value
                 .map(clientCompanyDtoMapper)
                 .orElseThrow();
     }

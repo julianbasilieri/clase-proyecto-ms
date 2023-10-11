@@ -23,7 +23,6 @@ public class ClientServiceImpl implements ClientService {
         this.clientMapper = clientMapper;
     }
 
-
     @Override
     public void add(ClientDto entity) {
         Client client = new Client();
@@ -36,8 +35,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDto getById(Long id) {
-        Optional<Client> client = clientRepository.findById(id);
-        return client
+        Optional<Client> value = clientRepository.findById(id);
+        return value
                 .map(clientDtoMapper)
                 .orElseThrow();
     }
