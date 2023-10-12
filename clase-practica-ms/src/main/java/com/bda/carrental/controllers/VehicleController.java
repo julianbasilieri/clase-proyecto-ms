@@ -24,7 +24,7 @@ public class VehicleController {
         return ResponseEntity.ok(values);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<VehicleDto> getById(@RequestParam("id") int id) {
+    public ResponseEntity<VehicleDto> getById(@PathVariable("id") Long id) {
         VehicleDto value = vehicleService.getById(id);
         return ResponseEntity.ok(value);
     }
@@ -42,7 +42,7 @@ public class VehicleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@RequestParam("id") int id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         vehicleService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
